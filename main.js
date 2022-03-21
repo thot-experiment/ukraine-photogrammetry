@@ -44,7 +44,7 @@ function init() {
   dracoLoader.setDecoderPath( './three/draco/' );
   loader.setDRACOLoader( dracoLoader );
 
-  loader.load( 'bmp2.glb', function ( gltf ) {
+  loader.load( 'bmp_2.glb', function ( gltf ) {
     //gltf.scene.rotation.y =  -Math.PI/2
     //gltf.scene.position.set(0,-6,-19)
 
