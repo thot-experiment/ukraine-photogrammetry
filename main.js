@@ -11,14 +11,6 @@ let controls, dummy, controller
 let geometry, material, mesh;
 let startpos, prepos
 
-//buttons
-//0  1  2  3  4  5  6  7
-//a  b  x  y lb rb lt rt
-
-//axes
-// 0  1  2  3
-//+x -y +x -y
-
 init()
 
 function init() {
@@ -32,14 +24,6 @@ function init() {
   scene.add(camera)
   let color = new THREE.Color(0xffffff)
   scene.background = color
-  /*
-  scene.fog = new THREE.FogExp2(color, 0.00015)
-
-  let pointLight = new THREE.PointLight( 0xffffff );
-  pointLight.position.set(1,10,2)
-  scene.add(pointLight)
-  */
-
 
   const loader = new GLTFLoader()//.setPath( './' );
   //
@@ -47,14 +31,14 @@ function init() {
   dracoLoader.setDecoderPath( './three/draco/' );
   loader.setDRACOLoader( dracoLoader );
 
-  loader.load( 'bmp_2.glb', function ( gltf ) {
+  loader.load( settings.mesh, function ( gltf ) {
     //gltf.scene.rotation.y =  -Math.PI/2
     //gltf.scene.position.set(0,-6,-19)
 
     scene.add( gltf.scene );
-    camera.position.x = -5
-    camera.position.y = 1.7
-    camera.position.z = 6
+    camera.position.x = settings.cx || -5
+    camera.position.y = settings.cy || 1.7
+    camera.position.z = settings.cz || 6
     let bm2 = new THREE.MeshBasicMaterial()
     bm2.map = scene.children[1].children[0].material.map
     bm2.map.encoding = 3000
@@ -122,7 +106,14 @@ function init() {
 
 }
 
-let speed = 0
+window.onresize =	function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
 
 function animation( time ) {
   controls.update();

@@ -1,17 +1,56 @@
 <!doctype html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>bmp2</title>
-    <meta name="description" content="">
-    <link rel="shortcut icon" type="image/ico" href="./favicon.ico"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <title>Ukraine Photogrammetry</title>
+    <link rel="stylesheet" type="text/css" href="/default.css">
   </head>
   <body>
-    <div id ="scale">
+    <div id="wrapper">
+      <h1 id="ukraine-photogrammetry">Ukraine Photogrammetry</h1>
+<p>Fuck Putin, Слава Україні! 🇺🇦 ✊ 🌻</p>
+<p>Those who don&#39;t study history are doomed to repeat it, and we can only study what we record. I&#39;ve been experimenting with creating 3D reconstructions of scenes from Russia&#39;s unprovoked invasion of Ukraine using videos from twitter/telegram/tiktok and youtube. I&#39;m making these available here as <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>, please DM me on <a href="https://twitter.com/thot_exper1ment">twitter</a> or email me <a href="mailto:&#x74;&#x68;&#x6f;&#x74;&#x40;&#x74;&#104;&#105;&#x69;&#99;&#x2e;&#99;&#99;">&#x74;&#x68;&#x6f;&#x74;&#x40;&#x74;&#104;&#105;&#x69;&#99;&#x2e;&#99;&#99;</a> if you have any questions or have footage to use for more reconstructions. Source code is available on <a href="https://github.com/thot-experiment/ukraine-photogrammetry">github</a></p>
+<h2 id="reconstructed-scenes">Reconstructed Scenes</h2>
+<p>These may take a moment to load up, they are 10-20MB each. VR viewing should be available as well with everything scaled true to life. If anyone has information about the original sources of these videos or higher quality versions please contact me.</p>
+<h4 id="bmp-2-wreckage">BMP-2 Wreckage</h4>
+<p><a href="https://thot-experiment.github.io/ukraine-photogrammetry/bmp2.html">3D viewer</a><br>
+<a href="https://thot-experiment.github.io/ukraine-photogrammetry/bmp2.html"><img src="heavy/bmp2_3.jpg" alt="3d"></a>
+Recreated from <a href="https://twitter.com/IAPonomarenko/status/1504881235675463680">this video</a>
+<a href="https://twitter.com/IAPonomarenko/status/1504881235675463680"><img src="heavy/bmp2.jpg" alt="bmp2"></a></p>
+<h4 id="hind-crashed-in-a-field">Hind crashed in a field</h4>
+<p><a href="https://thot-experiment.github.io/ukraine-photogrammetry/hind.html">3D viewer</a><br>
+<a href="https://thot-experiment.github.io/ukraine-photogrammetry/hind.html"><img src="heavy/hind_3.jpg" alt="3d"></a>
+Recreated from <a href="https://twitter.com/girkingirkin/status/1501237568477741058">this video</a>
+<a href="https://twitter.com/girkingirkin/status/1501237568477741058"><img src="heavy/hind.jpg" alt="hind"></a></p>
+<h4 id="hind-crashed-on-a-hillside">Hind crashed on a hillside</h4>
+<p><a href="https://thot-experiment.github.io/ukraine-photogrammetry/hind_hill.html">3D viewer</a><br>
+<a href="https://thot-experiment.github.io/ukraine-photogrammetry/hind_hill.html"><img src="heavy/hind_hill_3.jpg" alt="3d"></a>
+Recreated from <a href="https://www.youtube.com/watch?v=LRX44ZK4C-Y">this video</a>
+<a href="https://www.youtube.com/watch?v=LRX44ZK4C-Y"><img src="heavy/hind_hill.jpg" alt="hind_hill"></a></p>
+<h4 id="ka-52-crashed-in-a-field">KA-52 crashed in a field</h4>
+<p><a href="https://thot-experiment.github.io/ukraine-photogrammetry/ka52.html">3D viewer</a><br>
+<a href="https://thot-experiment.github.io/ukraine-photogrammetry/ka52.html"><img src="heavy/ka52_3.jpg" alt="3d"></a>
+Recreated from <a href="https://imgur.com/U3LmwnY">this video</a>
+<a href="https://imgur.com/U3LmwnY"><img src="heavy/ka52.jpg" alt="ka52"></a></p>
+<h2 id="procedure">Procedure</h2>
+<p>The individual steps here have been covered pretty well elsewhere on the internet but here are some notes to make it easier if you want to attempt something similar. I&#39;ll try to keep this updated with anything else I discover.</p>
+<p><strong>1.Split video to images</strong>
+<a href="https://ffmpeg.org">ffmpeg</a> makes this easy</p>
+<pre><code class="language-bash"><pre><code class="hljs bash">ffmpeg -i crashed_hind.mp4 -ss 7.5 -to 30 -r 5/1 h%03d.png</code></pre>
+</code></pre>
+<p><code>-ss 7.5 -to 30</code> means process from 7.5 sec to 30 sec<br>
+<code>-r 5/1</code> sets the framerate to 5fps<br>
+<code>h%03d.png</code> write to <code>*.png</code> sequence like <code>h001.png, h002.png, . . .</code> </p>
+<p>For some videos it&#39;s necessary to remove certain sections or process a section with higher speed motion at a higher temporal resolution and it&#39;s good to be aware of that as a potential remedy to lost tracking.</p>
+<p><strong>2. Reconstruct scene</strong></p>
+<p>I use <a href="https://alicevision.org/#meshroom">meshroom</a> for this (<a href="https://sketchfab.com/blogs/community/tutorial-meshroom-for-beginners/">good overview of meshroom usage</a>), In general I stick with the default processing graph with with a couple exceptions. As a second-to-last step I&#39;ll usually add a MeshDecimate node to tame the mesh density a bit since the noisy data from compressed cell-phone videos can&#39;t really hope to represent that much detail anyway. On the final step I use LSCM for UV generation in order to make sure I have just one texture atlas for the final mesh. Finally as a last resort when things aren&#39;t working I&#39;ll turn on generating and matching based on the AKAZE feature descriptors in addition to SIFT, in my experience this is mostly a shot in the dark and rarely helps tangibly.</p>
+<p>I&#39;m curious if commercial offerings would do a better job of this so if anyone has a spare license/credits for any of those please get in touch.</p>
+<p><strong>3. Clean and prepare mesh</strong></p>
+<p>Once I&#39;ve got a mesh I use <a href="https://www.blender.org/">blender</a> try and scale the scene as best I can to use real world units using a combination of publicly available vehicle blueprints and guesswork. If the mesh needs cleaning up I&#39;ll also do that. Once things look good I&#39;ll export everything as a <code>*.glb</code> which can be directly imported into <a href="https://threejs.org/">three.js</a> and generally seems like a decently well supported interchange format. The viewer is just a few lines of JS and pretty much all of the heavy lifting is done by <a href="https://threejs.org/">three</a>.</p>
+
     </div>
-    <!--script src="./peerjs.min.js"></script-->
-    <script type="module" src="main.js"></script>
   </body>
+  <script type="module" src="/default.js"></script>
 </html>

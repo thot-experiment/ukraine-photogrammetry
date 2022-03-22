@@ -1,0 +1,140 @@
+*{
+  margin: none;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('/fonts/raleway/Raleway_wght.ttf') format('truetype-variations');
+  font-style: normal;
+  font-weight: 100 900;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+}
+/*
+src: url('/s/fonts/atkinson/Atkinson-Hyperlegible-BoldItalic-102.ttf')
+src: url('/s/fonts/atkinson/Atkinson-Hyperlegible-Italic-102.ttf')
+src: url('/s/fonts/atkinson/Atkinson-Hyperlegible-Regular-102.ttf')
+*/
+
+@font-face {
+  font-family: 'Atkinson';
+  src: url('/fonts/atkinson/Atkinson-Hyperlegible-Bold-102.ttf');
+  font-style: normal;
+  font-weight: bold;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+}
+
+@font-face {
+  font-family: 'Atkinson';
+  src: url('/fonts/atkinson/Atkinson-Hyperlegible-Regular-102.ttf');
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+}
+
+body {
+  font-family: "Atkinson", sans-serif;
+  font-weight: normal;
+  letter-spacing: -0.1px;
+  margin: 0px;
+  color: #200;
+  font-size: 16px;
+  background: #ddd;
+}
+
+img, video {
+  width: 100%;
+}
+
+h1 {
+  font-family: "Raleway", sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  background: black;
+  color: white;
+  padding: 1rem;
+  margin: 0rem -1rem;
+}
+
+h2,h3,h4,h5 {
+  font-family: "Atkinson", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+
+#header {
+  font-family: "Raleway", sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  background: black;
+  color: white;
+  width: 56rem;
+  max-width: 100%;
+  padding: 1rem 1rem 1rem 1rem;
+  margin-bottom: 1px;
+  width: 56rem;
+  color: #ff99bb !important;
+}
+
+.header_main {
+  font-size:3rem !important;
+}
+
+
+#wrapper {
+  max-width: 100%;
+  background: #fafafa;
+  padding: 0rem 1rem;
+  width: 56rem;
+  height: 100%;
+  min-height: 100vh;
+  padding-bottom: 3rem;
+}
+
+.post {
+  margin-bottom: 2rem;
+}
+
+.header_social {
+  height: 0.8em;
+  width: 0.8em;
+  margin: 0.1em;
+  margin-bottom: 0;
+  display: inline-block;
+  float: right;
+}
+
+/* phones */
+@media only screen and (max-width: 599px) {
+  .header_main {
+    font-size: 1.6rem !important;
+  }
+  
+  h1 {
+    font-size: 1.6rem;
+  }
+}
+
+/* portrait smol */
+@media only screen and (min-width: 600px) {
+
+
+}
+
+/* landscape smol */
+@media only screen and (min-width: 900px) {
+
+
+}
+
+
+/* desktop */
+@media only screen and (min-width: 1200px) {
+
+
+} 
